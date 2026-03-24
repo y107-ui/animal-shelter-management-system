@@ -1,2 +1,19 @@
-# animal-shelter-management-system
-Ce projet consiste en la conception d’un système de gestion pour un refuge animalier basé sur une base de données relationnelle. Il permet de suivre les animaux, gérer les familles d’accueil et d’adoption, enregistrer les soins, les placements et les activités, avec un historique complet.
+# Animal Shelter Management System
+
+Ce projet est un système de gestion pour un refuge animalier basé sur une base de données relationnelle.
+
+## Fonctionnalités
+- Gestion des animaux
+- Gestion des familles d’accueil et d’adoption
+- Suivi des soins
+- Historique des placements
+- Gestion des activités
+
+## Technologies
+- Java
+- PostgreSQL
+- SQL
+- Application exécutable (JAR)
+
+## Objectif
+Modéliser et gérer efficacement les données d’un refuge animalier en assurant la traçabilité des informations.
