@@ -1,0 +1,19 @@
+﻿# Java
+*.class
+bin/
+out/
+target/
+
+# Eclipse / IDE
+.classpath
+.project
+.settings/
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
