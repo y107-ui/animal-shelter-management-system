@@ -1,40 +1,55 @@
+
+
 package connexion;
 
 import exceptions.ConnexionException;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+
 /**
-* Classe qui lance et ferme une connexion à la base de données 
+ * Classe qui lance et ferme une connexion à la base de données.
  */
 public class Connexion {
 
-    public static Connection connect() throws ConnexionException {
-        Connection connection = null;
+    private static final String CONFIG_PATH = "config/database.properties";
 
+    public static Connection connect() throws ConnexionException {
         try {
-            // Charger le driver
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             throw new ConnexionException("Driver PostgreSQL non trouvé", e);
         }
 
-        try {
-            // Configurations
-            String url = "jdbc:postgresql://pedago.univ-avignon.fr:5432/etd";
-            Properties props = new Properties();
-            props.setProperty("user", "uapv2500276");
-            props.setProperty("password", "261005");
+        Properties config = new Properties();
 
-            // Connexion
-            connection = DriverManager.getConnection(url, props);
-            System.out.println("✓ Connexion à la base de données  réussie !");
-            
+        try (FileInputStream input = new FileInputStream(CONFIG_PATH)) {
+            config.load(input);
+
+            String url = config.getProperty("db.url");
+            String user = config.getProperty("db.user");
+            String password = config.getProperty("db.password");
+
+            if (url == null || user == null || password == null) {
+                throw new ConnexionException("Configuration de base de données incomplète.");
+            }
+
+            Properties props = new Properties();
+            props.setProperty("user", user);
+            props.setProperty("password", password);
+
+            Connection connection = DriverManager.getConnection(url, props);
+            System.out.println("✓ Connexion à la base de données réussie !");
+            return connection;
+
+        } catch (IOException e) {
+            throw new ConnexionException("Fichier de configuration introuvable : " + CONFIG_PATH, e);
         } catch (Exception e) {
             throw new ConnexionException("Impossible de se connecter à la base de données", e);
         }
-
-        return connection;
     }
 
     public static void close(Connection cnx) throws ConnexionException {
