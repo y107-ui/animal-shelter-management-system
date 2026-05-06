@@ -17,3 +17,5 @@ Thumbs.db
 
 # Logs
 *.log
+
+config/database.properties
